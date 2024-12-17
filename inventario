@@ -1,0 +1,115 @@
+#utilizamos un fichero.py llamado iventario para insertar clases
+#creamos la clase pieza para indicar las características de ellas
+
+class Pieza:
+
+    #__init__ es el constructor de la clase y a continuacion van los atributos
+
+    def __init__(self, nombre, tipo, cantidad, precio):
+
+        self.nombre = nombre
+        self.tipo = tipo
+        self.cantidad = cantidad
+        self.precio = precio
+
+    #luego utilizamos __str__ para definir cómo se debe imprimir la clase
+    
+    def __str__(self):
+
+        return f"{self.nombre} - Tipo: {self.tipo}, Cantidad: {self.cantidad}, Precio: {self.precio}"
+
+#creamos la clase inventario para definir las modificaciones de las piezas
+
+class Inventario:
+
+    def __init__(self):
+
+        #añadimos una lista para las piezas
+        
+        self.piezas = [
+   
+        ]
+        
+    # definimos una función para invertar piezas nuevas
+    
+    def anyadir_pieza(self, nombre, tipo, cantidad, precio): 
+
+        nueva_pieza = Pieza(nombre, tipo, cantidad, precio)
+        self.piezas.append(nueva_pieza)
+
+        print(f"Pieza '{nombre}' añadida al inventario.")
+
+    # definimos otra función pero para eliminar piezas completas
+     
+    def eliminar_pieza(self, nombre):
+
+        for pieza in self.piezas:
+
+            if pieza.nombre == nombre:
+
+                self.piezas.remove(pieza)
+                print(f"Pieza '{nombre}' eliminada del inventario.")
+
+                return
+
+        print(f"Pieza '{nombre}' no encontrada en el inventario.")
+        
+    
+    #también definimos una función para modificar cualquier característica de las piezas
+    #puedes modificar solo una de las características, no hace falta cambiar todas
+    
+    def modificar_pieza(self, nombre, nuevo_tipo=None, nueva_cantidad=None, nuevo_precio=None):
+
+        for pieza in self.piezas:
+
+            if pieza.nombre == nombre:
+
+                if nuevo_tipo is not None:  #modificamos el tipo
+                    pieza.tipo = nuevo_tipo
+
+                if nueva_cantidad is not None:  #modificamos la cantidad
+                    pieza.cantidad = nueva_cantidad
+                    
+                    if nueva_cantidad <= 2:  #verificación de cantidad, te alerta cuando quedan 2 piezas o menos
+                        print(f"Advertencia: La cantidad de '{nombre}' es baja ({nueva_cantidad} unidades).")
+                   
+
+                if nuevo_precio is not None:  #modificamos el precio
+                    pieza.precio = nuevo_precio
+                print(f"Pieza '{nombre}' modificada.")
+                
+                return
+
+        print(f"Pieza '{nombre}' no encontrada en el inventario.")
+        
+    #hemos añadido un ejemplo de uso para probarlo   
+    
+    def rellenar_inventario_prueba(self):
+        piezas_prueba = [
+            {"nombre": "disco", "tipo": "cerámico", "cantidad": 24, "precio": 1150},
+            {"nombre": "manguito", "tipo": "aire", "cantidad": 50, "precio": 45},
+            {"nombre": "turbo", "tipo": "hibridado", "cantidad": 4, "precio": 1500},
+            {"nombre": "ventilador", "tipo": "viscoso", "cantidad": 10, "precio": 200},
+            {"nombre": "taqué", "tipo": "hidráulico", "cantidad": 64, "precio": 10},
+        ]
+        
+        for pieza in piezas_prueba:
+            self.anyadir_pieza(pieza['nombre'], pieza['tipo'], pieza['cantidad'], pieza['precio'])
+        print("Inventario de prueba rellenado.")
+
+    #la siguiente función definida es para consuktar la disponibilidad de las piezas
+    #si hay piezas en el inventario te las imprime, si no hay también te lo indica
+    
+    def consultar_inventario(self):
+
+        if not self.piezas:
+
+            print("El inventario está vacío.")
+
+        else:
+
+            print("Inventario:")
+
+            for pieza in self.piezas:
+
+                print(pieza)
